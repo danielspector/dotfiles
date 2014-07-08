@@ -32,16 +32,26 @@ Bundle 'tpope/vim-rails'
 Bundle 'airblade/vim-rooter'
 Bundle 'tpope/vim-surround'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+" Settings for ultisnips
+let g:UltiSnipsExpandTrigger="<c-f>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" iTerm2 specific settings for colorscheme
 let g:hybrid_use_iTerm_colors = 1
 color hybrid
 set t_Co=256
+hi LineNr ctermfg=236
+
+" Enable syntax highlighting
 syntax on
 set hlsearch
-hi LineNr ctermfg=236
 set guifont=Monaco:h14
 set ignorecase
 set nobackup
