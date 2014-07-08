@@ -90,6 +90,8 @@ alias mmotion='mmotion.command'
 alias insecure='open -a Google\ Chrome --args --disable-web-security'
 alias bb='ssh dspector@webserver-a.stg.lifebooker.com'
 alias updatesub='git submodule update --init --recursive && git submodule update --recursive'
+alias vundle='vim +PluginInstall +qall'
+alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 
 . ~/z.sh
 autoload -U promptinit && promptinit

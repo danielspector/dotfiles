@@ -31,6 +31,7 @@ Bundle 'mustache/vim-mustache-handlebars'
 Bundle 'tpope/vim-rails'
 Bundle 'airblade/vim-rooter'
 Bundle 'tpope/vim-surround'
+Bundle 'Valloric/YouCompleteMe'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -96,7 +97,7 @@ set tags+=gems.tags
 nnoremap <Space><Space> <c-^>
 
 " From r00k
-let mapleader = " "
+let mapleader = ","
 
 :nmap <c-s> :w<CR>
 :imap <c-s> <Esc>:w<CR>a
