@@ -41,7 +41,7 @@ filetype plugin indent on    " required
 " Settings for ultisnips
 let g:UltiSnipsExpandTrigger="<c-f>"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
 " iTerm2 specific settings for colorscheme
 let g:hybrid_use_iTerm_colors = 1
