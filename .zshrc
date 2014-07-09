@@ -6,7 +6,7 @@ vim() STTY=-ixon command vim "$@"
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-# ZSH_THEME="pure"
+ZSH_THEME="pure"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -94,8 +94,6 @@ alias vundle='vim +PluginInstall +qall'
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 
 . ~/z.sh
-autoload -U promptinit && promptinit
-prompt pure
 eval "$(rbenv init - zsh)"
 
 ### Added by the Heroku Toolbelt
