@@ -34,6 +34,8 @@ Bundle 'tpope/vim-surround'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
+Bundle 'tpope/vim-leiningen'
+Bundle 'tpope/vim-fireplace'
 
 call vundle#end()            " required
 filetype plugin indent on    " required

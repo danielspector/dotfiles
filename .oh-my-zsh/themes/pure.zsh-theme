@@ -1,0 +1,1 @@
+/Users/danielspector/projects/code/shell/pure/pure.zsh
