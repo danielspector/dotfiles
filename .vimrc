@@ -36,6 +36,8 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'tpope/vim-leiningen'
 Bundle 'tpope/vim-fireplace'
+Bundle 'tpope/vim-dispatch'
+Bundle 'bling/vim-airline'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -114,6 +116,7 @@ let mapleader = ","
 :nmap <c-s> :w<CR>
 :imap <c-s> <Esc>:w<CR>a
 :imap <c-s> <Esc><c-s>
+map <Leader>cs :w<cr>cpr
 map <Leader>rd :!bundle exec rspec % --format documentation<CR>
 vmap <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 map <Leader>t :w<cr>:call RunCurrentTest()<CR>
