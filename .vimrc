@@ -36,6 +36,7 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'tpope/vim-leiningen'
 Bundle 'tpope/vim-fireplace'
+Bundle 'scrooloose/nerdcommenter'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -45,16 +46,21 @@ let g:UltiSnipsExpandTrigger="<c-f>"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
+" Settings for ctrl-p
+
+let g:ctrlp_open_new_file = 'r'
+
 " iTerm2 specific settings for colorscheme
 let g:hybrid_use_iTerm_colors = 1
 color hybrid
 set t_Co=256
 hi LineNr ctermfg=236
-
+hi Search cterm=NONE ctermfg=grey ctermbg=blue
 " Enable syntax highlighting
 syntax on
 set hlsearch
 set guifont=Monaco:h14
+set shell=zsh
 set ignorecase
 set nobackup
 set noswapfile
@@ -111,9 +117,9 @@ nnoremap <Space><Space> <c-^>
 " From r00k
 let mapleader = ","
 
-:nmap <c-s> :w<CR>
-:imap <c-s> <Esc>:w<CR>a
-:imap <c-s> <Esc><c-s>
+nnoremap <c-s> :w<CR>
+inoremap <c-s> <Esc>:w<CR>
+inoremap <c-s> <Esc><c-s>
 map <Leader>rd :!bundle exec rspec % --format documentation<CR>
 vmap <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 map <Leader>t :w<cr>:call RunCurrentTest()<CR>
