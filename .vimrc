@@ -37,6 +37,8 @@ Bundle 'honza/vim-snippets'
 Bundle 'tpope/vim-leiningen'
 Bundle 'tpope/vim-fireplace'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'tpope/vim-dispatch'
+Bundle 'bling/vim-airline'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -117,9 +119,10 @@ nnoremap <Space><Space> <c-^>
 " From r00k
 let mapleader = ","
 
-nnoremap <c-s> :w<CR>
-inoremap <c-s> <Esc>:w<CR>
-inoremap <c-s> <Esc><c-s>
+:nmap <c-s> :w<CR>
+:imap <c-s> <Esc>:w<CR>a
+:imap <c-s> <Esc><c-s>
+map <Leader>cs :w<cr>cpr
 map <Leader>rd :!bundle exec rspec % --format documentation<CR>
 vmap <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 map <Leader>t :w<cr>:call RunCurrentTest()<CR>
