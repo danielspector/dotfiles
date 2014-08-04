@@ -49,7 +49,7 @@ ZSH_THEME="pure"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rails ruby bundler brew)
+plugins=(git rails ruby bundler brew zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -57,7 +57,7 @@ source $ZSH/oh-my-zsh.sh
 source ~/.bin/tmuxinator.zsh
 
 export EDITOR='vim'
-export PATH="/Users/dspector/.rbenv/shims:/Users/dspector/.rbenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/dspector/bin/"
+export PATH="/Users/dspector/.rbenv/shims:/Users/dspector/.rbenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/dspector/bin:/usr/local/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -86,12 +86,14 @@ alias gr='git remote -v'
 alias gd='git diff --ignore-space-at-eol -b -w --ignore-blank-lines'
 
 alias mmotion='mmotion.command'
-
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
 alias insecure='open -a Google\ Chrome --args --disable-web-security'
 alias bb='ssh dspector@webserver-a.stg.lifebooker.com'
 alias updatesub='git submodule update --init --recursive && git submodule update --recursive'
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias vundle='vim +PluginInstall +qall'
+alias lb_unicorn='bundle exec unicorn -c config/unicorn.rb -p 3001'
 
 . ~/z.sh
 eval "$(rbenv init - zsh)"

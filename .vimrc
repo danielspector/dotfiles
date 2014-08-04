@@ -39,6 +39,15 @@ Bundle 'tpope/vim-fireplace'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-dispatch'
 Bundle 'bling/vim-airline'
+Bundle 'ntpeters/vim-better-whitespace'
+Bundle 'myusuf3/numbers.vim'
+Bundle 'tpope/vim-endwise'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'tpope/vim-classpath'
+Bundle 'burnettk/vim-angular'
+Bundle 'pangloss/vim-javascript'
+Bundle 'othree/javascript-libraries-syntax.vim'
+Bundle 'matthewsimo/angular-vim-snippets'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -51,6 +60,25 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " Settings for ctrl-p
 
 let g:ctrlp_open_new_file = 'r'
+
+" Settings for NERDtree
+
+let g:NERDTreeMouseMode=2
+
+" Settings for vim-airline
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_symbols.space = "\ua0"
+
+set laststatus=2
+let g:airline_theme='wombat'
+
+" Settings for numbers.vim
+
+let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
 
 " iTerm2 specific settings for colorscheme
 let g:hybrid_use_iTerm_colors = 1
@@ -120,14 +148,25 @@ nnoremap <Space><Space> <c-^>
 let mapleader = ","
 
 :nmap <c-s> :w<CR>
-:imap <c-s> <Esc>:w<CR>a
+:imap <c-s> <Esc>:w<CR>
 :imap <c-s> <Esc><c-s>
 map <Leader>cs :w<cr>cpr
 map <Leader>rd :!bundle exec rspec % --format documentation<CR>
 vmap <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-map <Leader>t :w<cr>:call RunCurrentTest()<CR>
-map <Leader>o :w<cr>:call RunCurrentLineInTest()<CR>
+map <Leader>w :StripWhitespace<CR>
+map <Leader>q :noh<CR>
+map <Leader>n :bn<CR>
+map <Leader>p :bp<CR>
+nnoremap <leader>s :w<cr>
+inoremap <leader>s <C-c>:w<cr>
+map <Leader>sc :w<CR>cpr
+imap <Leader>sc <Esc>:w<CR>cpr
+noremap cp yap<S-}>p
+noremap <Leader>a ggVG=ip
+runtime! macros/matchit.vim
+set pastetoggle=<Leader>z
 
+map <Leader>o :w<cr>:call RunCurrentLineInTest()<CR>
 function! RunCurrentTest()
   let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
   if in_test_file
