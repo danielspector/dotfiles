@@ -56,6 +56,8 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 source ~/.bin/tmuxinator.zsh
 
+export JAVA_HOME=$(/usr/libexec/java_home)
+export JDK_HOME=$(/usr/libexec/java_home)
 export EDITOR='vim'
 export PATH="/Users/dspector/.rbenv/shims:/Users/dspector/.rbenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/dspector/bin:/usr/local/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
