@@ -1,1 +1,1 @@
-/Users/danielspector/projects/code/shell/pure/pure.zsh
+/Users/dspector/code/personal/shell/zsh/pure.zsh

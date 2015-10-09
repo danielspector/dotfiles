@@ -10,44 +10,54 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Colorscheme
-Bundle 'w0ng/vim-hybrid'
+Plugin 'w0ng/vim-hybrid'
+Plugin 'ajh17/Spacegray.vim'
 
 " Plugins
-Bundle 'rking/ag.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'Raimondi/delimitMate'
-Bundle 'mattn/gist-vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tpope/vim-bundler'
-Bundle 'guns/vim-clojure-static'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'tpope/vim-commentary'
-Bundle 'eudisd/vim-csapprox'
-Bundle 'tpope/vim-fugitive'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'mustache/vim-mustache-handlebars'
-Bundle 'tpope/vim-rails'
-Bundle 'airblade/vim-rooter'
-Bundle 'tpope/vim-surround'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
-Bundle 'tpope/vim-leiningen'
-Bundle 'tpope/vim-fireplace'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'tpope/vim-dispatch'
-Bundle 'bling/vim-airline'
-Bundle 'ntpeters/vim-better-whitespace'
-Bundle 'myusuf3/numbers.vim'
-Bundle 'tpope/vim-endwise'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-classpath'
-Bundle 'burnettk/vim-angular'
-Bundle 'pangloss/vim-javascript'
-Bundle 'othree/javascript-libraries-syntax.vim'
-Bundle 'matthewsimo/angular-vim-snippets'
+Plugin 'rking/ag.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'mattn/gist-vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tpope/vim-bundler'
+Plugin 'guns/vim-clojure-static'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'tpope/vim-commentary'
+Plugin 'eudisd/vim-csapprox'
+Plugin 'tpope/vim-fugitive'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'tpope/vim-rails'
+Plugin 'airblade/vim-rooter'
+Plugin 'tpope/vim-surround'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'tpope/vim-leiningen'
+Plugin 'tpope/vim-fireplace'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-dispatch'
+Plugin 'bling/vim-airline'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'myusuf3/numbers.vim'
+Plugin 'tpope/vim-endwise'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-classpath'
+Plugin 'burnettk/vim-angular'
+Plugin 'pangloss/vim-javascript'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'matthewsimo/angular-vim-snippets'
+Plugin 'tpope/vim-haml'
+Plugin 'vim-scripts/HTML-AutoCloseTag'
+Plugin 'godlygeek/tabular'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
+Plugin 'guns/vim-sexp'
+Plugin 'tpope/vim-repeat'
+Plugin 'amdt/vim-niji'
+Plugin 'dgrnbrg/vim-redl'
+Plugin 'vim-scripts/dbext.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'guns/vim-clojure-highlight'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -60,6 +70,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " Settings for ctrl-p
 
 let g:ctrlp_open_new_file = 'r'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|tags\|target\'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/target/*,*/tags/*,tags
 
 " Settings for NERDtree
 
@@ -82,14 +94,16 @@ let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
 
 " iTerm2 specific settings for colorscheme
 let g:hybrid_use_iTerm_colors = 1
-color hybrid
+let g:solarized_termcolors=256
+set background=dark
+colorscheme hybrid
 set t_Co=256
 hi LineNr ctermfg=236
 hi Search cterm=NONE ctermfg=grey ctermbg=blue
 " Enable syntax highlighting
 syntax on
 set hlsearch
-set guifont=Monaco:h14
+set guifont=Monaco:h12
 set shell=zsh
 set ignorecase
 set nobackup
@@ -112,6 +126,9 @@ if isdirectory(argv(0))
     autocmd VimEnter * NERDTree
 endif
 
+" Handle syntax highlighting for hamlbars.
+au BufReadPost *.hamlbars set syntax=haml
+let g:mustache_abbreviations = 1
 
 function! s:UpdateNERDTree(...)
   let stay = 0
@@ -163,48 +180,68 @@ map <Leader>sc :w<CR>cpr
 imap <Leader>sc <Esc>:w<CR>cpr
 noremap cp yap<S-}>p
 noremap <Leader>a ggVG=ip
+inoremap <C-a> <C-o>0
+inoremap <C-e> <C-o>$
+inoremap <C-o> <esc>o
+
 runtime! macros/matchit.vim
 set pastetoggle=<Leader>z
 
-map <Leader>o :w<cr>:call RunCurrentLineInTest()<CR>
-function! RunCurrentTest()
-  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
-  if in_test_file
-    call SetTestFile()
+" Ctags ftw
+" Stolen from http://blog.gonzih.me/blog/2013/03/18/how-i-cook-ctags-in-vim/
 
-    if match(expand('%'), '\.feature$') != -1
-      call SetTestRunner("!bin/cucumber")
-      exec g:bjo_test_runner g:bjo_test_file
-    elseif match(expand('%'), '_spec\.rb$') != -1
-      call SetTestRunner("!bundle exec rspec")
-      exec g:bjo_test_runner g:bjo_test_file
-    else
-      call SetTestRunner("!ruby -Itest")
-      exec g:bjo_test_runner g:bjo_test_file
-    endif
-  else
-    exec g:bjo_test_runner g:bjo_test_file
+" If tags file does not exist initializes it with symlink to tmp with UUID in
+" filename
+function! InitTagsFileWithSymlink(f)
+  let filepath = a:f
+  let issymlink = system("find '" . filepath . "' -type l | wc -l")
+  if issymlink == 0
+    let uuid = system('uuidgen')
+    let cmd  = 'ln -s "/tmp/ctags-for-vim-' . uuid . '" "' . filepath . '"'
+    let cmd  = substitute(cmd, '\n', '', 'g')
+    let resp = system(cmd)
   endif
 endfunction
 
-function! SetTestRunner(runner)
-  let g:bjo_test_runner=a:runner
+" Populates tags file if lines count is equal to 0
+" with `ctags -R .`
+function! PopulateTagsFile(f)
+  let filepath = a:f
+  let resp     = system('touch "' . filepath . '"')
+  let lines    = system('wc -l "' . filepath . '"')
+  let linescnt = substitute(lines, '\D', '', 'g')
+  if linescnt == 0
+    let cwd  = getcwd()
+    let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
+    let resp = system(cmd)
+  endif
 endfunction
 
-function! RunCurrentLineInTest()
-  let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
-  if in_test_file
-    call SetTestFileWithLine()
-  end
-
-  exec "!bin/rspec" g:bjo_test_file . ":" . g:bjo_test_file_line
+" Remove tags for saved file from tags file
+function! DelTagOfFile(file)
+  let fullpath    = a:file
+  let cwd         = getcwd()
+  let tagfilename = cwd . "/tags"
+  let f           = substitute(fullpath, cwd . "/", "", "")
+  let f           = escape(f, './')
+  let cmd         = 'sed --follow-symlinks -i "/' . f . '/d" "' . tagfilename . '"'
+  let resp        = system(cmd)
 endfunction
 
-function! SetTestFile()
-  let g:bjo_test_file=@%
+" Init tags file
+" Populate it
+" Remove data related to saved file
+" Append it with data for saved file
+function! UpdateTags()
+  let f           = expand("%:p")
+  let cwd         = getcwd()
+  let tagfilename = cwd . "/tags"
+  call InitTagsFileWithSymlink(tagfilename)
+  call PopulateTagsFile(tagfilename)
+  call DelTagOfFile(f)
+  let cmd  = 'ctags -a -f ' . tagfilename . ' "' . f . '"'
+  let resp = system(cmd)
 endfunction
 
-function! SetTestFileWithLine()
-  let g:bjo_test_file=@%
-  let g:bjo_test_file_line=line(".")
-endfunction
+"command UpdateTags call UpdateTags()
+autocmd BufWritePost *.rb,*.js,*.coffee,*.clj call UpdateTags()
